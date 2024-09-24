@@ -1,5 +1,5 @@
 ```
-└── Presidio_React_Training
+└── Presidio_React_Mini_Project
     ├── food-app
     │   ├── README.md
     │   ├── eslint.config.js
@@ -13,18 +13,33 @@
     │   │   ├── assets
     │   │   │   └── react.svg
     │   │   ├── components
-    │   │   │   ├── Pagination.tsx
     │   │   │   ├── RecipeCard.tsx
     │   │   │   ├── RecipeList.tsx
-    │   │   │   └── RecipeModal.tsx
+    │   │   │   ├── RecipeModal.tsx
+    │   │   │   └── UI
+    │   │   │       ├── Footer.tsx
+    │   │   │       ├── Header.tsx
+    │   │   │       ├── Pagination.tsx
+    │   │   │       ├── Search.tsx
+    │   │   │       └── Sort.tsx
+    │   │   ├── config
+    │   │   │   └── config.ts
     │   │   ├── hooks
-    │   │   │   └── useRecipes.tsx
+    │   │   │   ├── useFetchSortedRecipes.ts
+    │   │   │   ├── useRecipes.ts
+    │   │   │   └── useSearchRecipes.ts
     │   │   ├── index.css
     │   │   ├── main.tsx
     │   │   ├── pages
     │   │   │   └── HomePage.tsx
+    │   │   ├── redux
+    │   │   │   ├── feature
+    │   │   │   │   └── recipesSlice.ts
+    │   │   │   └── store.ts
     │   │   ├── service
     │   │   │   └── RecipeService.ts
+    │   │   ├── types
+    │   │   │   └── Recipe.ts
     │   │   └── vite-env.d.ts
     │   ├── tsconfig.app.json
     │   ├── tsconfig.json

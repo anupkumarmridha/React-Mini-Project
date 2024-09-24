@@ -69,7 +69,7 @@ function getDirectoryStructure(dir, level = 0, parentIsLast = []) {
 
 function writeDirectoryStructureToFile() {
   const currentDir = process.cwd();
-  let structure = `└── Presidio_React_Training\n`;
+  let structure = `└── Presidio_React_Mini_Project\n`;
   structure += getDirectoryStructure(currentDir, 1, [true]);
   fs.writeFileSync(outputFileName, "```\n" + structure + "```\n");
   console.log(`Directory structure written to ${outputFileName}`);
