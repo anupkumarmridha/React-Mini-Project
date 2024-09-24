@@ -1,12 +1,13 @@
-import AppNavbar from "./components/ui/AppNavbar";
-
-function App() {
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+const App = () => {
   return (
-    <>
-    <AppNavbar/>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;

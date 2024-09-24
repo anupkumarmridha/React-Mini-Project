@@ -1,1 +1,0 @@
-// Redux slice for managing food-related state

@@ -1,1 +1,0 @@
-// Food reviews section
