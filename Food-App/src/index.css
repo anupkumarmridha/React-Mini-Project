@@ -35,3 +35,9 @@ body {
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.footer {
+  margin-top: 50px;
+  text-align: center;
+  color: #888;
+}

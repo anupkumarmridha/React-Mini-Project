@@ -1,39 +1,79 @@
-import { useState } from 'react';
-import { useRecipes } from '../hooks/useRecipes';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
+import { setSelectedRecipe, toggleModal, setCurrentPage } from '../redux/feature/recipesSlice';
 import RecipeCard from './RecipeCard';
-import Pagination from './Pagination';
+import RecipeModal from './RecipeModal';
+import Pagination from './UI/Pagination';
+import { useRecipes } from '../hooks/useRecipes';
+import { useFetchSortedRecipes } from '../hooks/useFetchSortedRecipes';
+import { useSearchRecipes } from '../hooks/useSearchRecipes';
+import { Recipe } from '../types/Recipe';
 
-interface Recipe {
-  id: number;
-  name: string;
-  image: string;
-  caloriesPerServing: number;
-  difficulty: string;
-  prepTimeMinutes: number;
-  cookTimeMinutes: number;
-}
+const RecipeList: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { searchTerm, sortBy, sortOrder, currentPage, showModal, selectedRecipe } = useSelector((state: RootState) => state.recipes);
 
-const RecipeList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, isError } = useRecipes(currentPage);
+  // Default data fetching for the homepage
+  const { data: defaultRecipesData, isFetching: isFetchingDefault, error: defaultError } = useRecipes(currentPage, 8);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading recipes.</p>;
+  // Use the fetch sorted recipes hook when sorting
+  const { data: sortedRecipesData, isFetching: isFetchingSorted } = useFetchSortedRecipes(currentPage, 8, sortBy, sortOrder);
+
+  // Use the search recipes hook when searching
+  const { data: searchResultsData, isFetching: isFetchingSearch } = useSearchRecipes(searchTerm);
+
+  // Determine which data to display
+  let recipesData;
+  let isFetching;
+  let error;
+
+  if (searchTerm) {
+    recipesData = searchResultsData;
+    isFetching = isFetchingSearch;
+    error = null;
+  } else if (sortBy) {
+    recipesData = sortedRecipesData;
+    isFetching = isFetchingSorted;
+    error = null;
+  } else {
+    recipesData = defaultRecipesData;
+    isFetching = isFetchingDefault;
+    error = defaultError;
+  }
+
+  const handleCardClick = (recipe: Recipe) => {
+    dispatch(setSelectedRecipe(recipe));
+    dispatch(toggleModal());
+  };
+
+  const handleCloseModal = () => {
+    dispatch(toggleModal());
+  };
+
+  if (isFetching) return <p>Loading...</p>;
+  if (error) return <p>Error loading recipes.</p>;
+  if (!recipesData) return <p>No recipes found.</p>;
 
   return (
-    <div>
+    <div className='container'>
       <h1>Recipes</h1>
-      <div className="recipe-list">
-        {data.recipes.map((recipe: Recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+      <div className="recipe-list d-flex flex-wrap">
+        {recipesData.recipes.map((recipe: Recipe) => (
+          <div key={recipe.id} className="p-2">
+            <RecipeCard recipe={recipe} onCardClick={handleCardClick} />
+          </div>
         ))}
       </div>
       <Pagination
         currentPage={currentPage}
-        totalItems={data.total} 
-        itemsPerPage={30}
-        onPageChange={setCurrentPage}
+        totalItems={recipesData.total || 0}
+        itemsPerPage={8}
+        onPageChange={(page) => dispatch(setCurrentPage(page))}
       />
+      {showModal && selectedRecipe && (
+        <RecipeModal show={showModal} handleClose={handleCloseModal} recipe={selectedRecipe} />
+      )}
     </div>
   );
 };
