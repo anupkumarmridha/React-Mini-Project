@@ -1,0 +1,1 @@
+// Common Layout component (e.g., wraps Header, Footer)

@@ -1,0 +1,1 @@
+// Individual food card component
