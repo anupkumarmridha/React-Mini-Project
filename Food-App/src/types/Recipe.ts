@@ -15,5 +15,6 @@ export interface Recipe {
     rating: number;
     reviewCount: number;
     mealType: string[];
+    price: number;
   }
   
