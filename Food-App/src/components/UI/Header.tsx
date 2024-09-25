@@ -10,6 +10,8 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
   const { sortBy, sortOrder } = useSelector((state: RootState) => state.recipes);
 
+  const cartItems = useSelector((state: RootState) => state.cart);
+
   const handleSearch = (query: string) => {
     dispatch(setSearchTerm(query));
     dispatch(setCurrentPage(1)); // Reset page to 1 on new search
@@ -46,7 +48,7 @@ const Header: React.FC = () => {
                 <Link className="nav-link" to="/cart">Cart</Link>
               </li>
             </ul>
-            <span className='cart-item'>Cart Items:0</span>
+            <span className='cart-item'>Cart Items: <strong>{cartItems.length}</strong></span>
             <form className="d-flex me-3">
               <Search onSearch={handleSearch} />
             </form>
