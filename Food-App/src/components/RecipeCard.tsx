@@ -18,7 +18,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onCardClick }) => {
 
 
   const handelAddToCart = (recipe:Recipe) => {
-    dispatch(addToCart({ id: recipe.id, name: recipe.name, price: recipe.price, quantity }));
+    dispatch(addToCart({ id: recipe.id, image: recipe.image, name: recipe.name, price: recipe.price, quantity }));
   }
 
   return (
