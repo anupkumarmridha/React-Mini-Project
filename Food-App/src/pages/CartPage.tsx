@@ -10,11 +10,14 @@ const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart);
 
   const handleRemoveFromCart = useCallback((id: number) => {
+    console.log(`Removing ${id} from cart`);
     dispatch(removeFromCart({ id }));
   }, [dispatch]);
 
 
   const handleQuantityChange = useCallback((id: number, newQuantity: number) => {
+    console.log(`Updating quantity ${newQuantity} with id: ${id}`);
+
     if (newQuantity > 0) {
       dispatch(updateCartQuantity({ id, quantity: newQuantity }));
     }

@@ -12,18 +12,21 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onCardClick }) => {
   const [quantity, setQuantity] = React.useState(1);
   const dispatch = useDispatch();
 
-  const handleIncrease = (e: React.MouseEvent) => {
+  const handleIncrease = React.useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    console.log(`Increasing quantity of ${recipe.name}`);
     setQuantity(prev => prev + 1);
-  };
+  }, [recipe.name]);
 
-  const handleDecrease = (e: React.MouseEvent) => {
+  const handleDecrease = React.useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    console.log(`Decreasing quantity of ${recipe.name}`);
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
-  };
+  }, [recipe.name]);
 
-  const handleAddToCart = (e: React.MouseEvent, recipe: Recipe) => {
+  const handleAddToCart = React.useCallback((e: React.MouseEvent, recipe: Recipe) => {
     e.stopPropagation();
+    console.log(`Adding ${quantity} ${recipe.name} to cart`);
     dispatch(addToCart({
       id: recipe.id,
       image: recipe.image,
@@ -31,7 +34,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onCardClick }) => {
       price: recipe.price,
       quantity
     }));
-  };
+  }, [dispatch, quantity]);
 
   return (
     <div className="card" style={{ width: '18rem' }} onClick={() => onCardClick(recipe)}>

@@ -32,17 +32,17 @@ const RecipeList: React.FC = () => {
     recipesData = searchResultsData;
     isFetching = isFetchingSearch;
     error = null;
-    console.log("searchResultsData", searchResultsData);
+    // console.log("searchResultsData", searchResultsData);
   } else if (sortBy) {
     recipesData = sortedRecipesData;
     isFetching = isFetchingSorted;
     error = null;
-    console.log("sortedRecipesData", sortedRecipesData);
+    // console.log("sortedRecipesData", sortedRecipesData);
   } else {
     recipesData = defaultRecipesData;
     isFetching = isFetchingDefault;
     error = defaultError;
-    console.log("defaultRecipesData", defaultRecipesData);
+    // console.log("defaultRecipesData", defaultRecipesData);
   }
 
   const handleCardClick = (recipe: Recipe) => {
