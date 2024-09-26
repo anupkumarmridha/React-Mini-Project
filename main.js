@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const outputFileName = "directory_structure.md";
+const outputFileName = "README.md";
 const gitIgnorePath = path.join(process.cwd(), ".gitignore");
 let gitIgnoreContent;
 try {
