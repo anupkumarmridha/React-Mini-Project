@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { removeFromCart, updateCartQuantity } from '../redux/feature/cartSilce';
@@ -39,9 +39,9 @@ const CartPage = () => {
   }, [cartItems, handleQuantityChange, handleRemoveFromCart]);
 
   const calculateTotal = useCallback(() => {
+    console.log(`Calculating total`);
     return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  }
-    , [cartItems]);
+  },[cartItems]);
 
   const handleCheckout = useCallback(() => {
     // Implement checkout logic here

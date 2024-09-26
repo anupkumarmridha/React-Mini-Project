@@ -66,7 +66,7 @@ export const fetchSortedRecipes = async (sortBy: string, order: 'asc' | 'desc', 
 
 // Function to search recipes
 export const searchRecipes = async (query: string) => {
-  if (!query) return { recipes: [] };
+  if (!query) return { recipes: [], total:0 };
   try {
     const response = await axios.get(`${baseUrl}/search`, {
       params: { q: query }
