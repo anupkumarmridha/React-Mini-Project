@@ -4,7 +4,7 @@ import { Recipe } from '../types/Recipe';
 import { RecipeResponse } from '../types/RecipeResponse';
 // Utility function to generate random values for price and quantity
 const generatePrice = (rating:number, reviewCount:number) => (reviewCount * rating)/10; 
-const generateQuantity = (rating:number) => rating.toFixed(2);
+const generateQuantity = (rating:number) => rating.toFixed();
 
 // Service file for fetching recipes
 export const fetchRecipes = async (page = 1, limit = 30) => {
