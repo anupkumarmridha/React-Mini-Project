@@ -50,7 +50,7 @@ export const {
   setSortOrder,
   setSelectedRecipe,
   toggleModal,
-  setCurrentPage // Export the action
+  setCurrentPage
 } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

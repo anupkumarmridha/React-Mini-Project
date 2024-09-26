@@ -41,3 +41,8 @@ body {
   text-align: center;
   color: #888;
 }
+
+.cart-item {
+  color: #888;
+  margin-right: 42rem;
+}

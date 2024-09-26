@@ -9,6 +9,7 @@ import { useRecipes } from '../hooks/useRecipes';
 import { useFetchSortedRecipes } from '../hooks/useFetchSortedRecipes';
 import { useSearchRecipes } from '../hooks/useSearchRecipes';
 import { Recipe } from '../types/Recipe';
+import { RecipeResponse } from '../types/RecipeResponse';
 
 const RecipeList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,23 +24,30 @@ const RecipeList: React.FC = () => {
   // Use the search recipes hook when searching
   const { data: searchResultsData, isFetching: isFetchingSearch } = useSearchRecipes(searchTerm);
 
+  const defaultRecipeResponse: RecipeResponse = {
+    recipes: [],
+    total: 0,
+  };
   // Determine which data to display
-  let recipesData;
+  let recipesData: RecipeResponse;
   let isFetching;
   let error;
 
   if (searchTerm) {
-    recipesData = searchResultsData;
+    recipesData = searchResultsData || defaultRecipeResponse;
     isFetching = isFetchingSearch;
     error = null;
+    // console.log("searchResultsData", searchResultsData);
   } else if (sortBy) {
-    recipesData = sortedRecipesData;
+    recipesData = sortedRecipesData || defaultRecipeResponse;
     isFetching = isFetchingSorted;
     error = null;
+    // console.log("sortedRecipesData", sortedRecipesData);
   } else {
-    recipesData = defaultRecipesData;
+    recipesData = defaultRecipesData || defaultRecipeResponse;
     isFetching = isFetchingDefault;
     error = defaultError;
+    // console.log("defaultRecipesData", defaultRecipesData);
   }
 
   const handleCardClick = (recipe: Recipe) => {
@@ -51,6 +59,9 @@ const RecipeList: React.FC = () => {
     dispatch(toggleModal());
   };
 
+  // if (defaultRecipesData) {
+  //   console.log(defaultRecipesData);
+  // }
   if (isFetching) return <p>Loading...</p>;
   if (error) return <p>Error loading recipes.</p>;
   if (!recipesData) return <p>No recipes found.</p>;

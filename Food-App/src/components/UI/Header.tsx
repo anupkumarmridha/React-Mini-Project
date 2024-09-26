@@ -4,10 +4,13 @@ import { RootState } from '../../redux/store';
 import { setSearchTerm, setSortBy, setSortOrder, setCurrentPage } from '../../redux/feature/recipesSlice';
 import Search from './Search';
 import Sort from './Sort';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const { sortBy, sortOrder } = useSelector((state: RootState) => state.recipes);
+
+  const cartItems = useSelector((state: RootState) => state.cart);
 
   const handleSearch = (query: string) => {
     dispatch(setSearchTerm(query));
@@ -39,12 +42,13 @@ const Header: React.FC = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">Home</a>
+                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Cart</a>
+                <Link className="nav-link" to="/cart">Cart</Link>
               </li>
             </ul>
+            <span className='cart-item'>Cart Items: <strong>{cartItems.length}</strong></span>
             <form className="d-flex me-3">
               <Search onSearch={handleSearch} />
             </form>

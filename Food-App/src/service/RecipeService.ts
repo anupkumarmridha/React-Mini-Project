@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { baseUrl } from '../config/config';
+import { Recipe } from '../types/Recipe';
+import { RecipeResponse } from '../types/RecipeResponse';
+// Utility function to generate random values for price and quantity
+const generatePrice = (rating:number, reviewCount:number) => (reviewCount * rating)/10; 
+const generateQuantity = (rating:number) => rating.toFixed();
 
 // Service file for fetching recipes
 export const fetchRecipes = async (page = 1, limit = 30) => {
@@ -10,7 +15,21 @@ export const fetchRecipes = async (page = 1, limit = 30) => {
         limit: limit
       }
     });
-    return response.data;
+
+    // console.log(response.data);
+
+    const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
+      ...recipe,
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
+    }));
+    
+    const recipeResponse: RecipeResponse = {
+      recipes: modifiedRecipes,
+      total: response.data.total,
+    };
+    // console.log(recipeResponse);
+    return recipeResponse;
   } catch {
     throw new Error('Failed to fetch recipes');
   }
@@ -27,7 +46,19 @@ export const fetchSortedRecipes = async (sortBy: string, order: 'asc' | 'desc', 
         limit
       }
     });
-    return response.data;
+
+    const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
+      ...recipe,
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
+    }));
+    
+    const recipeResponse: RecipeResponse = {
+      recipes: modifiedRecipes,
+      total: response.data.total,
+    };
+    // console.log(recipeResponse);
+    return recipeResponse;
   } catch {
     throw new Error('Failed to fetch sorted recipes');
   }
@@ -35,12 +66,23 @@ export const fetchSortedRecipes = async (sortBy: string, order: 'asc' | 'desc', 
 
 // Function to search recipes
 export const searchRecipes = async (query: string) => {
-  if (!query) return { recipes: [] };
+  if (!query) return { recipes: [], total:0 };
   try {
     const response = await axios.get(`${baseUrl}/search`, {
       params: { q: query }
     });
-    return response.data;
+    const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
+      ...recipe,
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
+    }));
+    
+    const recipeResponse: RecipeResponse = {
+      recipes: modifiedRecipes,
+      total: response.data.total,
+    };
+    // console.log(recipeResponse);
+    return recipeResponse;
   } catch {
     throw new Error('Failed to search recipes');
   }
