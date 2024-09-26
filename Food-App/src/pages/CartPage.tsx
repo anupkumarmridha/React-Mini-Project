@@ -1,10 +1,17 @@
 import React from 'react'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/store';
+import { removeFromCart } from '../redux/feature/cartSilce';
 
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart);
+
+  const dispatch = useDispatch();
+
+  const handleRemoveFromCart = (id: number) => {
+    dispatch(removeFromCart({ id }));
+  }
   
   return (
     <div className="container mt-5">
@@ -23,6 +30,7 @@ const CartPage = () => {
             <img src={item.image} alt={item.name} style={{ width: '100px', height: '100px' }} />
             <p className="card-text">Price: ${item.price}</p>
             <p className="card-text">Quantity: {item.quantity}</p>
+            <button className="btn btn-danger" onClick={() => handleRemoveFromCart(item.id)}>Remove</button>
           </div>
           </div>
         </div>
