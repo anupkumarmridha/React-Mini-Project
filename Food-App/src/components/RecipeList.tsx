@@ -32,14 +32,17 @@ const RecipeList: React.FC = () => {
     recipesData = searchResultsData;
     isFetching = isFetchingSearch;
     error = null;
+    console.log("searchResultsData", searchResultsData);
   } else if (sortBy) {
     recipesData = sortedRecipesData;
     isFetching = isFetchingSorted;
     error = null;
+    console.log("sortedRecipesData", sortedRecipesData);
   } else {
     recipesData = defaultRecipesData;
     isFetching = isFetchingDefault;
     error = defaultError;
+    console.log("defaultRecipesData", defaultRecipesData);
   }
 
   const handleCardClick = (recipe: Recipe) => {
@@ -51,6 +54,9 @@ const RecipeList: React.FC = () => {
     dispatch(toggleModal());
   };
 
+  // if (defaultRecipesData) {
+  //   console.log(defaultRecipesData);
+  // }
   if (isFetching) return <p>Loading...</p>;
   if (error) return <p>Error loading recipes.</p>;
   if (!recipesData) return <p>No recipes found.</p>;

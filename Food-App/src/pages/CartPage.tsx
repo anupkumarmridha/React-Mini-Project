@@ -28,9 +28,9 @@ const CartPage = () => {
           <div className="card-body">
             <h5 className="card-title">{item.name}</h5>
             <img src={item.image} alt={item.name} style={{ width: '100px', height: '100px' }} />
-            <p className="card-text">Price: ${item.price}</p>
-            <p className="card-text">Quantity: {item.quantity}</p>
-            <button className="btn btn-danger" onClick={() => handleRemoveFromCart(item.id)}>Remove</button>
+            {/* <p className="card-text">Price: ${item.price}</p> */}
+            {/* <p className="card-text">Quantity: {item.quantity}</p> */}
+            <button className="btn btn-danger ms-4" onClick={() => handleRemoveFromCart(item.id)}>Remove</button>
           </div>
           </div>
         </div>
