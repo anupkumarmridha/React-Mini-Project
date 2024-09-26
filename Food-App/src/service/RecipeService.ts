@@ -3,8 +3,8 @@ import { baseUrl } from '../config/config';
 import { Recipe } from '../types/Recipe';
 import { RecipeResponse } from '../types/RecipeResponse';
 // Utility function to generate random values for price and quantity
-const generateRandomPrice = () => (Math.random() * (50 - 10) + 10).toFixed(2); // Random price between 10 and 50
-const generateRandomQuantity = () => Math.floor(Math.random() * 10) + 1; // Random quantity between 1 and 10
+const generatePrice = (rating:number, reviewCount:number) => (reviewCount * rating)/10; 
+const generateQuantity = (rating:number) => rating.toFixed(2);
 
 // Service file for fetching recipes
 export const fetchRecipes = async (page = 1, limit = 30) => {
@@ -20,8 +20,8 @@ export const fetchRecipes = async (page = 1, limit = 30) => {
 
     const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
       ...recipe,
-      price: generateRandomPrice(),
-      quantity: generateRandomQuantity(),
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
     }));
     
     const recipeResponse: RecipeResponse = {
@@ -49,8 +49,8 @@ export const fetchSortedRecipes = async (sortBy: string, order: 'asc' | 'desc', 
 
     const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
       ...recipe,
-      price: generateRandomPrice(),
-      quantity: generateRandomQuantity(),
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
     }));
     
     const recipeResponse: RecipeResponse = {
@@ -73,8 +73,8 @@ export const searchRecipes = async (query: string) => {
     });
     const modifiedRecipes = response.data.recipes.map((recipe: Recipe) => ({
       ...recipe,
-      price: generateRandomPrice(),
-      quantity: generateRandomQuantity(),
+      price: generatePrice(recipe.rating, recipe.reviewCount),
+      quantity: generateQuantity(recipe.rating),
     }));
     
     const recipeResponse: RecipeResponse = {
